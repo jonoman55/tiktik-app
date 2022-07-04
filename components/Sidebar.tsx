@@ -10,6 +10,7 @@ import SuggestedAccounts from './SuggestedAccounts';
 import Footer from './Footer';
 import useAuthStore from '../store/authStore';
 
+// TODO : Fix Discover and SuggestedAccount icon styles to match For You icon
 const Sidebar: NextPage = () => {
     const { pathname } = useRouter();
 
