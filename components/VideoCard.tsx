@@ -92,7 +92,9 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
                             </div>
                         </Link>
                         <Link href={`/detail/${_id}`}>
-                            <p className='mt-2 font-normal'>{caption}</p>
+                            <p className='mt-2 font-normal'>
+                                {caption}
+                            </p>
                         </Link>
                     </div>
                 </div>
@@ -105,10 +107,10 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
                 >
                     <Link href={`/detail/${_id}`}>
                         <video
-                            loop
+                            className='lg:w-[600px] h-[300px] md:h-[400px] lg:h-[528px] w-[200px] rounded-2xl cursor-pointer bg-gray-100'
                             ref={videoRef}
                             src={video.asset.url}
-                            className='lg:w-[600px] h-[300px] md:h-[400px] lg:h-[528px] w-[200px] rounded-2xl cursor-pointer bg-gray-100'
+                            loop
                         ></video>
                     </Link>
                     {isHover && (

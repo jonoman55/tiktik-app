@@ -89,21 +89,18 @@ const Detail = ({ postDetails }: IProps) => {
                 <div className='flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap'>
                     <div className='relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center'>
                         <div className='opacity-90 absolute top-6 left-2 lg:left-6 flex gap-6 z-50'>
-                            <p
-                                className='cursor-pointer'
-                                onClick={() => router.back()}
-                            >
+                            <p className='cursor-pointer' onClick={() => router.back()}>
                                 <MdOutlineCancel className='text-white text-[35px] hover:opacity-90' />
                             </p>
                         </div>
                         <div className='relative'>
                             <div className='lg:h-[100vh] h-[60vh]'>
                                 <video
-                                    className=' h-full cursor-pointer'
+                                    className='h-full cursor-pointer'
                                     ref={videoRef}
                                     onClick={onVideoClick}
                                     loop
-                                    src={post?.video?.asset.url}
+                                    src={post?.video?.asset?.url}
                                 ></video>
                             </div>
 
@@ -143,12 +140,16 @@ const Detail = ({ postDetails }: IProps) => {
                                             {post.postedBy.userName.replace(/\s+/g, '')}{' '}
                                             <GoVerified className='text-blue-400 text-xl' />
                                         </div>
-                                        <p className='text-md'>{post.postedBy.userName}</p>
+                                        <p className='text-md'>
+                                            {post.postedBy.userName}
+                                        </p>
                                     </div>
                                 </div>
                             </Link>
                             <div className='px-10'>
-                                <p className='text-md text-gray-600'>{post.caption}</p>
+                                <p className='text-md text-gray-600'>
+                                    {post.caption}
+                                </p>
                             </div>
                             <div className='mt-10 px-10'>
                                 {userProfile && (

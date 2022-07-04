@@ -1,4 +1,4 @@
-export interface Video {
+export type Video = {
   caption: string;
   video: {
     asset: {
