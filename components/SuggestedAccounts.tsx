@@ -12,8 +12,8 @@ interface IProps {
 };
 
 const SuggestedAccounts: NextPage<IProps> = ({ fetchAllUsers, allUsers }) => {
-    const users = useMemo(
-        () => allUsers
+    const users = useMemo(() =>
+        allUsers
             .sort(() => 0.5 - Math.random())
             .slice(0, allUsers.length),
         [allUsers]

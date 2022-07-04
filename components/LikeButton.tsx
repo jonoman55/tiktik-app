@@ -16,9 +16,9 @@ const LikeButton: NextPage<IProps> = ({ likes, flex, handleLike, handleDislike }
 
     const { userProfile }: any = useAuthStore();
 
-    const filterLikes = useMemo(
-        () => likes?.filter(
-            (item: any) => item._ref === userProfile?._id
+    const filterLikes = useMemo(() =>
+        likes?.filter((item: any) =>
+            item._ref === userProfile?._id
         ),
         [likes, userProfile?._id]
     );

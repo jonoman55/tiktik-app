@@ -12,6 +12,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const doc = req.body;
         client.create(doc).then(() => {
             res.status(200).json('Video Created');
+        }).catch(() => {
+            res.status(409).json('Failed To Create Video');
         });
     }
 };

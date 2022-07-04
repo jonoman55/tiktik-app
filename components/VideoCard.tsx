@@ -18,6 +18,7 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
     const [playing, setPlaying] = useState(false);
     const [isHover, setIsHover] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(false);
+    
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const onVideoPress = useCallback(() => {

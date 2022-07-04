@@ -15,7 +15,9 @@ interface IProps {
 
 const Home = ({ videos }: IProps) => {
     const router = useRouter();
+
     const { topic } = router.query;
+    
     return (
         <>
             <MetaData title={`TikTik ${topic ? `- ${capitalizeFirstLetter(`${topic}`)}` : ''}`}>

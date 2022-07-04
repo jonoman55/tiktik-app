@@ -57,7 +57,7 @@ const Comments: NextPage<IProps> = ({ comment, setComment, addComment, comments,
                         </div>
                     ))
                 ) : (
-                    <NoResults text='No Comments Yet! Be First to do add the comment.' />
+                    <NoResults text='No Comments Yet! Be First to add a comment.' />
                 )}
             </div>
             {userProfile && (
