@@ -42,7 +42,6 @@ const SuggestedAccounts: NextPage<IProps> = ({ fetchAllUsers, allUsers }) => {
                                     layout='responsive'
                                 />
                             </div>
-
                             <div className='hidden xl:block'>
                                 <p className='flex gap-1 items-center text-md font-bold text-primary lowercase'>
                                     {user.userName.replace(/\s+/g, '')}{' '}

@@ -7,9 +7,9 @@ import { BASE_URL } from '../../utils';
 import MetaData from '../../utils/meta';
 import VideoCard from '../../components/VideoCard';
 import NoResults from '../../components/NoResults';
+import useAuthStore from '../../store/authStore';
 
 import { IUser, Video } from '../../types';
-import useAuthStore from '../../store/authStore';
 
 interface IProps {
     data: {

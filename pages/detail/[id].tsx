@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,30 +9,31 @@ import { GoVerified } from 'react-icons/go';
 import axios from 'axios';
 
 import { BASE_URL } from '../../utils';
+import MetaData from '../../utils/meta';
 import Comments from '../../components/Comments';
 import LikeButton from '../../components/LikeButton';
 import useAuthStore from '../../store/authStore';
 
 import { Video } from '../../types';
-import MetaData from '../../utils/meta';
 
 interface IProps {
     postDetails: Video;
 };
 
 const Detail = ({ postDetails }: IProps) => {
+    const router = useRouter();
+
     const [post, setPost] = useState(postDetails);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [isVideoMuted, setIsVideoMuted] = useState<boolean>(false);
     const [isPostingComment, setIsPostingComment] = useState<boolean>(false);
     const [comment, setComment] = useState<string>('');
-
+    
     const videoRef = useRef<HTMLVideoElement>(null);
-    const router = useRouter();
 
     const { userProfile }: any = useAuthStore();
 
-    const onVideoClick = () => {
+    const onVideoClick = useCallback(() => {
         if (isPlaying) {
             videoRef?.current?.pause();
             setIsPlaying(false);
@@ -40,7 +41,7 @@ const Detail = ({ postDetails }: IProps) => {
             videoRef?.current?.play();
             setIsPlaying(true);
         }
-    };
+    }, [isPlaying]);
 
     useEffect(() => {
         if (post && videoRef?.current) {
@@ -147,7 +148,7 @@ const Detail = ({ postDetails }: IProps) => {
                                 </div>
                             </Link>
                             <div className='px-10'>
-                                <p className=' text-md text-gray-600'>{post.caption}</p>
+                                <p className='text-md text-gray-600'>{post.caption}</p>
                             </div>
                             <div className='mt-10 px-10'>
                                 {userProfile && (

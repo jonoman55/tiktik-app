@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { GoVerified } from 'react-icons/go';
@@ -6,21 +6,14 @@ import { GoVerified } from 'react-icons/go';
 import NoResults from './NoResults';
 import useAuthStore from '../store/authStore';
 
-import { IUser } from '../types';
+import { IComment, IUser } from '../types';
 
 interface IProps {
     isPostingComment: Boolean;
     comment: string;
     setComment: Dispatch<SetStateAction<string>>;
-    addComment: (e: React.FormEvent) => void;
+    addComment: (e: FormEvent) => void;
     comments: IComment[];
-};
-
-interface IComment {
-    comment: string;
-    length?: number;
-    _key: string;
-    postedBy: { _ref?: string; _id?: string };
 };
 
 const Comments = ({ comment, setComment, addComment, comments, isPostingComment }: IProps) => {
@@ -33,7 +26,7 @@ const Comments = ({ comment, setComment, addComment, comments, isPostingComment 
                         <div key={idx}>
                             {allUsers?.map((user: IUser, index: number) =>
                                 user._id === (item.postedBy._ref || item.postedBy._id) && (
-                                    <div className=' p-2 items-center' key={index}>
+                                    <div className='p-2 items-center' key={index}>
                                         <Link href={`/profile/${user._id}`}>
                                             <div className='flex items-start gap-3'>
                                                 <div className='w-12 h-12'>

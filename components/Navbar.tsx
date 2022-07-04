@@ -7,16 +7,18 @@ import { BiSearch } from 'react-icons/bi';
 import { IoMdAdd } from 'react-icons/io';
 import { GoogleLogin, googleLogout } from '@react-oauth/google';
 
-import useAuthStore from '../store/authStore';
 import { createOrGetUser } from '../utils';
-import Logo from '../utils/tiktik-logo.png';
+import useAuthStore from '../store/authStore';
+import logo from '../utils/tiktik-logo.png';
 
 import { IUser } from '../types';
 
+// TODO : Fix Logout Button Styles
 const Navbar = () => {
+    const router = useRouter();
+
     const [user, setUser] = useState<IUser | null>();
     const [searchValue, setSearchValue] = useState('');
-    const router = useRouter();
 
     const { userProfile, addUser, removeUser } = useAuthStore();
 
@@ -37,7 +39,7 @@ const Navbar = () => {
                 <div className='w-[100px] md:w-[129px] md:h-[30px] h-[38px]'>
                     <Image
                         className='cursor-pointer'
-                        src={Logo}
+                        src={logo}
                         alt='logo'
                         layout='responsive'
                     />
@@ -86,7 +88,7 @@ const Navbar = () => {
                         )}
                         <button
                             type='button'
-                            className=' border-2 p-2 rounded-full cursor-pointer outline-none shadow-md'
+                            className='border-2 p-2 rounded-full cursor-pointer outline-none shadow-md'
                             onClick={() => {
                                 googleLogout();
                                 removeUser();
@@ -97,6 +99,7 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <GoogleLogin
+                        state_cookie_domain={process.env.NEXT_PUBLIC_BASE_URL}
                         onSuccess={(response) => createOrGetUser(response, addUser)}
                         onError={() => console.log('Login Failed')}
                     />

@@ -35,3 +35,26 @@ export interface IUser {
   userName: string;
   image: string;
 }
+
+export interface IComment {
+  comment: string;
+  length?: number;
+  _key: string;
+  postedBy: {
+    _ref?: string;
+    _id?: string;
+  }
+}
+
+export interface IGoogleUser {
+  name: string;
+  picture: string;
+  sub: string;
+}
+
+export interface ISanityUser {
+  _id: string;
+  _type: string;
+  userName: string;
+  image: string; 
+}

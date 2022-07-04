@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import { BASE_URL } from '../utils';
+import { BASE_URL, capitalizeFirstLetter } from '../utils';
 import MetaData from '../utils/meta';
 import VideoCard from '../components/VideoCard';
 import NoResults from '../components/NoResults';
@@ -13,23 +13,20 @@ interface IProps {
     videos: Video[];
 };
 
-const capitalizeFirstLetter = (input: string) =>
-    input.charAt(0).toUpperCase() + input.slice(1);
-
-const MetaLink = () => (
-    <>
-        <meta name="description" content="TikTik is a social media site where you can create and share videos with others." />
-        <link rel="icon" href="/favicon.ico" />
-    </>
-);
-
 const Home = ({ videos }: IProps) => {
     const router = useRouter();
     const { topic } = router.query;
     return (
         <>
             <MetaData title={`TikTik ${topic ? `- ${capitalizeFirstLetter(`${topic}`)}` : ''}`}>
-                <MetaLink />
+                <meta
+                    name="description"
+                    content="TikTik is a social media site where you can create and share videos with others."
+                />
+                <link
+                    rel="icon"
+                    href="/favicon.ico"
+                />
             </MetaData>
             <div className='flex flex-col gap-10 videos h-full'>
                 {videos.length

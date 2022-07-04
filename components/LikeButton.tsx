@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import type { NextPage } from 'next';
 import { MdFavorite } from 'react-icons/md';
 
@@ -16,17 +16,24 @@ const LikeButton: NextPage<IProps> = ({ likes, flex, handleLike, handleDislike }
 
     const { userProfile }: any = useAuthStore();
 
-    const filterLikes = useMemo(() =>
-        likes?.filter((item: any) => item._ref === userProfile?._id),
-    [likes, userProfile?._id]);
+    const filterLikes = useMemo(
+        () => likes?.filter(
+            (item: any) => item._ref === userProfile?._id
+        ),
+        [likes, userProfile?._id]
+    );
 
-    useEffect(() => {
+    const fetchLikes = useCallback(() => {
         if (filterLikes?.length > 0) {
             setAlreadyLiked(true);
         } else {
             setAlreadyLiked(false);
         }
-    }, [filterLikes, likes]);
+    }, [filterLikes]);
+
+    useEffect(() => {
+        fetchLikes();
+    }, [fetchLikes, likes]);
 
     return (
         <div className={`${flex} gap-6`}>

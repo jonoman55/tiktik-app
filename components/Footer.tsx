@@ -1,5 +1,5 @@
 import React from 'react';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 
 import { footerList1, footerList2, footerList3 } from '../utils/constants';
 
@@ -11,7 +11,7 @@ interface IProps {
 const List = ({ items, mt }: IProps) => (
     <div className={`flex flex-wrap gap-2 ${mt && 'mt-5'}`}>
         {items.map((item: string, index: number) => (
-            <p key={index} className='text-gray-400 text-sm  hover:underline cursor-pointer'>
+            <p key={index} className='text-gray-400 text-sm hover:underline cursor-pointer'>
                 {item}
             </p>
         ))}

@@ -18,19 +18,19 @@ interface IProps {
 };
 
 const Search = ({ videos }: IProps) => {
+    const router = useRouter();
+    
     const [isAccounts, setIsAccounts] = useState(false);
 
     const { allUsers }: { allUsers: IUser[] } = useAuthStore();
-
-    const router = useRouter();
 
     const { searchTerm }: any = router.query;
 
     const accounts = isAccounts ? 'border-b-2 border-black' : 'text-gray-400';
     const isVideos = !isAccounts ? 'border-b-2 border-black' : 'text-gray-400';
 
-    const searchedAccounts = useMemo(() =>
-        allUsers?.filter(
+    const searchedAccounts = useMemo(
+        () => allUsers?.filter(
             (user: IUser) => user.userName.toLowerCase().includes(searchTerm)
         ),
         [allUsers, searchTerm]

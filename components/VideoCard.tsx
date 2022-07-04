@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import type { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { NextPage } from 'next';
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
 import { GoVerified } from 'react-icons/go';
@@ -20,7 +20,7 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
     const [isVideoMuted, setIsVideoMuted] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    const onVideoPress = () => {
+    const onVideoPress = useCallback(() => {
         if (playing) {
             videoRef?.current?.pause();
             setPlaying(false);
@@ -28,7 +28,7 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
             videoRef?.current?.play();
             setPlaying(true);
         }
-    };
+    }, [playing]);
 
     useEffect(() => {
         if (videoRef?.current) {
@@ -41,9 +41,9 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
             <div>
                 <Link href={`/detail/${_id}`}>
                     <video
-                        loop
-                        src={video.asset.url}
                         className='w-[250px] md:w-full rounded-xl cursor-pointer'
+                        src={video.asset.url}
+                        loop
                     ></video>
                 </Link>
                 <div className='flex gap-2 -mt-8 items-center ml-4'>
@@ -66,16 +66,16 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
                 <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded'>
                     <div className='md:w-16 md:h-16 w-10 h-10'>
                         <Link href={`/profile/${postedBy?._id}`}>
-                            <Fragment>
+                            <div>
                                 <Image
                                     width={62}
                                     height={62}
-                                    className=' rounded-full'
+                                    className='rounded-full'
                                     src={postedBy?.image}
                                     alt='user-profile'
                                     layout='responsive'
                                 />
-                            </Fragment>
+                            </div>
                         </Link>
                     </div>
                     <div>
@@ -91,7 +91,7 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
                             </div>
                         </Link>
                         <Link href={`/detail/${_id}`}>
-                            <p className='mt-2 font-normal '>{caption}</p>
+                            <p className='mt-2 font-normal'>{caption}</p>
                         </Link>
                     </div>
                 </div>
@@ -110,7 +110,6 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
                             className='lg:w-[600px] h-[300px] md:h-[400px] lg:h-[528px] w-[200px] rounded-2xl cursor-pointer bg-gray-100'
                         ></video>
                     </Link>
-
                     {isHover && (
                         <div className='absolute bottom-6 cursor-pointer left-8 md:left-14 lg:left-0 flex gap-10 lg:justify-between w-[100px] md:w-[50px] lg:w-[600px] p-3'>
                             {playing ? (

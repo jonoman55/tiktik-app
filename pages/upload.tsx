@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SanityAssetDocument } from '@sanity/client';
 import { useRouter } from 'next/router';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import axios from 'axios';
 
-import useAuthStore from '../store/authStore';
-import MetaData from '../utils/meta';
 import { BASE_URL } from '../utils';
+import MetaData from '../utils/meta';
 import { client } from '../utils/client';
 import { topics } from '../utils/constants';
+import useAuthStore from '../store/authStore';
 
 const Upload = () => {
+    const router = useRouter();
+
     const [caption, setCaption] = useState('');
     const [topic, setTopic] = useState<String>(topics[0].name);
     const [loading, setLoading] = useState<Boolean>(false);
@@ -20,7 +22,6 @@ const Upload = () => {
     const [wrongFileType, setWrongFileType] = useState<Boolean>(false);
 
     const userProfile: any = useAuthStore((state) => state.userProfile);
-    const router = useRouter();
 
     useEffect(() => {
         if (!userProfile) router.push('/');
@@ -29,7 +30,6 @@ const Upload = () => {
     const uploadVideo = async (e: any) => {
         const selectedFile = e.target.files[0];
         const fileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
-
         // uploading asset to sanity
         if (fileTypes.includes(selectedFile.type)) {
             setWrongFileType(false);
@@ -52,7 +52,6 @@ const Upload = () => {
     const handlePost = async () => {
         if (caption && videoAsset?._id && topic) {
             setSavingPost(true);
-
             const doc = {
                 _type: 'post',
                 caption,
@@ -70,19 +69,17 @@ const Upload = () => {
                 },
                 topic,
             };
-
             await axios.post(`${BASE_URL}/api/post`, doc);
-
             router.push('/');
         }
     };
 
-    const handleDiscard = () => {
+    const handleDiscard = useCallback(() => {
         setSavingPost(false);
         setVideoAsset(undefined);
         setCaption('');
         setTopic('');
-    };
+    }, []);
 
     return (
         <>
@@ -94,7 +91,7 @@ const Upload = () => {
                             <p className='text-2xl font-bold'>Upload Video</p>
                             <p className='text-md text-gray-400 mt-1'>Post a video to your account</p>
                         </div>
-                        <div className='border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center  outline-none mt-10 w-[260px] h-[458px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100'>
+                        <div className='border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-[260px] h-[458px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100'>
                             {loading ? (
                                 <p className='text-center text-3xl text-red-400 font-semibold'>
                                     Uploading...
@@ -112,7 +109,6 @@ const Upload = () => {
                                                         Select video to upload
                                                     </p>
                                                 </div>
-
                                                 <p className='text-gray-400 text-center mt-10 text-sm leading-10'>
                                                     MP4 or WebM or ogg <br />
                                                     720x1280 resolution or higher <br />
@@ -131,7 +127,7 @@ const Upload = () => {
                                             />
                                         </label>
                                     ) : (
-                                        <div className='rounded-3xl w-[300px]  p-4 flex flex-col gap-6 justify-center items-center'>
+                                        <div className='rounded-3xl w-[300px] p-4 flex flex-col gap-6 justify-center items-center'>
                                             <video
                                                 className='rounded-xl h-[462px] mt-16 bg-black'
                                                 controls
@@ -141,7 +137,7 @@ const Upload = () => {
                                             <div className='flex justify-between gap-20'>
                                                 <p className='text-lg'>{videoAsset.originalFilename}</p>
                                                 <button
-                                                    className=' rounded-full bg-gray-200 text-red-400 p-2 text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out'
+                                                    className='rounded-full bg-gray-200 text-red-400 p-2 text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out'
                                                     type='button'
                                                     onClick={() => setVideoAsset(undefined)}
                                                 >
@@ -168,7 +164,6 @@ const Upload = () => {
                             onChange={(e) => setCaption(e.target.value)}
                         />
                         <label className='text-md font-medium '>Choose a topic</label>
-
                         <select
                             className='outline-none lg:w-650 border-2 border-gray-200 text-md capitalize lg:p-4 p-2 rounded cursor-pointer'
                             onChange={(e) => setTopic(e.target.value)}

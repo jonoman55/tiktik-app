@@ -1,6 +1,6 @@
-import sanityClient from '@sanity/client';
+import SanityClient from '@sanity/client';
 
-export const client = sanityClient({
+export const client = SanityClient({
   projectId: '26xywlzz',
   dataset: 'production',
   apiVersion: '2022-03-10',
