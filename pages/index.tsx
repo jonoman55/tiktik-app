@@ -17,7 +17,7 @@ const Home = ({ videos }: IProps) => {
     const router = useRouter();
 
     const { topic } = router.query;
-    
+
     return (
         <>
             <MetaData title={`TikTik ${topic ? `- ${capitalizeFirstLetter(`${topic}`)}` : ''}`}>
@@ -31,13 +31,11 @@ const Home = ({ videos }: IProps) => {
                 />
             </MetaData>
             <div className='flex flex-col gap-10 videos h-full'>
-                {videos.length
-                    ? videos?.map((video: Video) =>
-                        <VideoCard post={video} isShowingOnHome key={video._id} />
-                    ) : (
-                        <NoResults text={`No Videos`} />
-                    )
-                }
+                {videos.length ? videos?.map((video: Video) => (
+                    <VideoCard key={video._id} post={video} isShowingOnHome />
+                )) : (
+                    <NoResults text={`No Videos`} />
+                )}
             </div>
         </>
     );

@@ -44,7 +44,9 @@ const Profile = ({ data }: IProps) => {
 
     return (
         <>
-            <MetaData title={`TikTik - ${userProfile ? 'Profile' : user.userName}`} />
+            <MetaData
+                title={`TikTik - ${userProfile?.userName === user?.userName ? 'Profile' : user?.userName}`}
+            />
             <div className='w-full'>
                 <div className='flex gap-6 md:gap-10 mb-4 bg-white w-full'>
                     <div className='w-16 h-16 md:w-32 md:h-32'>
@@ -53,14 +55,13 @@ const Profile = ({ data }: IProps) => {
                             height={120}
                             layout='responsive'
                             className='rounded-full'
-                            src={user.image}
+                            src={user?.image}
                             alt='user-profile'
                         />
                     </div>
-
                     <div>
                         <div className='text-md md:text-2xl font-bold tracking-wider flex gap-2 items-center justify-center lowercase'>
-                            <span>{user.userName.replace(/\s+/g, '')}</span>
+                            <span>{user?.userName.replace(/\s+/g, '')}</span>
                             <GoVerified className='text-blue-400 md:text-xl text-md' />
                         </div>
                         <p className='text-sm font-medium'>
@@ -78,11 +79,9 @@ const Profile = ({ data }: IProps) => {
                         </p>
                     </div>
                     <div className='flex gap-6 flex-wrap md:justify-start'>
-                        {videosList.length > 0 ? (
-                            videosList.map((post: Video, idx: number) => (
-                                <VideoCard key={idx} post={post} />
-                            ))
-                        ) : (
+                        {videosList.length > 0 ? videosList?.map((post: Video, idx: number) => (
+                            <VideoCard key={idx} post={post} />
+                        )) : (
                             <NoResults
                                 text={`No ${showUserVideos ? '' : 'Liked'} Videos Yet`}
                             />

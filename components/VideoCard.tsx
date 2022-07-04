@@ -43,7 +43,7 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
                 <Link href={`/detail/${_id}`}>
                     <video
                         className='w-[250px] md:w-full rounded-xl cursor-pointer'
-                        src={video.asset.url}
+                        src={video?.asset?.url}
                         loop
                     ></video>
                 </Link>
@@ -83,11 +83,11 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
                         <Link href={`/profile/${postedBy?._id}`}>
                             <div className='flex items-center gap-2'>
                                 <p className='flex gap-2 items-center md:text-md font-bold text-primary'>
-                                    {postedBy.userName}{' '}
+                                    {postedBy?.userName}{' '}
                                     <GoVerified className='text-blue-400 text-md' />
                                 </p>
                                 <p className='capitalize font-medium text-xs text-gray-500 hidden md:block'>
-                                    {postedBy.userName}
+                                    {postedBy?.userName}
                                 </p>
                             </div>
                         </Link>
@@ -109,7 +109,7 @@ const VideoCard: NextPage<IProps> = ({ post: { caption, postedBy, video, _id, li
                         <video
                             className='lg:w-[600px] h-[300px] md:h-[400px] lg:h-[528px] w-[200px] rounded-2xl cursor-pointer bg-gray-100'
                             ref={videoRef}
-                            src={video.asset.url}
+                            src={video?.asset?.url}
                             loop
                         ></video>
                     </Link>

@@ -6,6 +6,7 @@ import { AiOutlineLogout } from 'react-icons/ai';
 import { BiSearch } from 'react-icons/bi';
 import { IoMdAdd } from 'react-icons/io';
 import { GoogleLogin, googleLogout } from '@react-oauth/google';
+import { toast } from 'react-toastify';
 
 import { createOrGetUser } from '../utils';
 import useAuthStore from '../store/authStore';
@@ -13,7 +14,6 @@ import logo from '../utils/tiktik-logo.png';
 
 import { IUser } from '../types';
 
-// TODO : Fix Logout Button Styles
 const Navbar = () => {
     const router = useRouter();
 
@@ -36,6 +36,24 @@ const Navbar = () => {
     const handleLogout = () => {
         googleLogout();
         removeUser();
+        toast('Goodbye!', {
+            type: 'success'
+        });
+    };
+
+    const handleLogin = (response: any) => {
+        createOrGetUser(response, addUser).then(() => {
+            toast('Welcome!', {
+                type: 'success'
+            });
+        });
+    };
+
+    const handleLoginError = () => {
+        console.log('Login Failed');
+        toast('Login Failed!', {
+            type: 'error'
+        });
     };
 
     return (
@@ -50,7 +68,7 @@ const Navbar = () => {
                     />
                 </div>
             </Link>
-            <div className='relative hidden md:block'>
+            <div className='relative hidden md:block md:px-2'>
                 <form
                     className='absolute md:static top-10 -left-20 bg-white'
                     onClick={handleSearch}
@@ -71,19 +89,19 @@ const Navbar = () => {
             </div>
             <div>
                 {user ? (
-                    <div className='flex gap-5 md:gap-10'>
+                    <div className='flex gap-5 md:gap-10 mt-1 items-center'>
                         <Link href='/upload'>
-                            <button className='border-2 px-2 md:px-4 text-md font-semibold flex items-center gap-2'>
+                            <button className='border-2 p-2 md:px-4 text-md font-semibold flex items-center gap-2'>
                                 <IoMdAdd className='text-xl' />{' '}
                                 <span className='hidden md:block'>Upload</span>
                             </button>
                         </Link>
-                        {user.image && (
-                            <Link href={`/profile/${user._id}`}>
+                        {user?.image && (
+                            <Link href={`/profile/${user?._id}`}>
                                 <div>
                                     <Image
-                                        className='rounded-full cursor-pointer'
-                                        src={user.image}
+                                        className='flex rounded-full cursor-pointer'
+                                        src={user?.image}
                                         alt='user'
                                         width={40}
                                         height={40}
@@ -96,14 +114,14 @@ const Navbar = () => {
                             type='button'
                             onClick={handleLogout}
                         >
-                            <AiOutlineLogout color='red' fontSize={21} />
+                            <AiOutlineLogout color='red' fontSize={18} />
                         </button>
                     </div>
                 ) : (
                     <GoogleLogin
                         state_cookie_domain={process.env.NEXT_PUBLIC_BASE_URL}
-                        onSuccess={(response) => createOrGetUser(response, addUser)}
-                        onError={() => console.log('Login Failed')}
+                        onSuccess={handleLogin}
+                        onError={handleLoginError}
                     />
                 )}
             </div>

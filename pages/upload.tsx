@@ -3,6 +3,7 @@ import { SanityAssetDocument } from '@sanity/client';
 import { useRouter } from 'next/router';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import { BASE_URL } from '../utils';
@@ -30,7 +31,6 @@ const Upload = () => {
     const uploadVideo = async (e: any) => {
         const selectedFile = e.target.files[0];
         const fileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
-        // uploading asset to sanity
         if (fileTypes.includes(selectedFile.type)) {
             setWrongFileType(false);
             setLoading(true);
@@ -42,10 +42,23 @@ const Upload = () => {
                 .then((data) => {
                     setVideoAsset(data);
                     setLoading(false);
+                    toast('Video Upload Complete!', {
+                        type: 'success'
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                    toast('Video Upload Failed!', {
+                        type: 'error'
+                    });
                 });
         } else {
             setLoading(false);
             setWrongFileType(true);
+            toast('Wrong File Type!', {
+                type: 'warning'
+            });
         }
     };
 
@@ -69,23 +82,35 @@ const Upload = () => {
                 },
                 topic,
             };
-            await axios.post(`${BASE_URL}/api/post`, doc);
-            router.push('/');
+            const res = await axios.post(`${BASE_URL}/api/post`, doc);
+            if (res.status === 200) {
+                router.push('/');
+                toast('Successfully Posted Video!', {
+                    type: 'success'
+                });
+            } else {
+                toast('Something Went Wrong!', {
+                    type: 'error'
+                });
+            }
         }
     };
 
-    const handleDiscard = useCallback(() => {
+    const handleDiscard = () => {
         setSavingPost(false);
         setVideoAsset(undefined);
         setCaption('');
         setTopic('');
-    }, []);
+        toast('Post Discarded!', {
+            type: 'info'
+        });
+    };
 
     return (
         <>
             <MetaData title='TikTik - Upload' />
             <div className='flex w-full h-full absolute left-0 top-[60px] lg:top-[70px] mb-10 pt-10 lg:pt-20 bg-[#F8F8F8] justify-center'>
-                <div className=' bg-white rounded-lg xl:h-[80vh] flex gap-6 flex-wrap justify-center items-center p-14 pt-6'>
+                <div className='bg-white rounded-lg xl:h-[80vh] flex gap-6 flex-wrap justify-center items-center p-14 pt-6'>
                     <div>
                         <div>
                             <p className='text-2xl font-bold'>
@@ -95,7 +120,7 @@ const Upload = () => {
                                 Post a video to your account
                             </p>
                         </div>
-                        <div className='border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-[260px] h-[458px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100'>
+                        <div className='border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 mb-12 w-[260px] h-[458px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100'>
                             {loading ? (
                                 <p className='text-center text-3xl text-red-400 font-semibold'>
                                     Uploading...

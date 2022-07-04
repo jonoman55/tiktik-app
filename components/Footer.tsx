@@ -1,7 +1,8 @@
 import React from 'react';
 import type { NextPage } from 'next';
+import Link from 'next/link';
 
-import { footerList1, footerList2, footerList3 } from '../utils/constants';
+import { footerList1, footerList2 } from '../utils/constants';
 
 interface IProps {
     items: string[];
@@ -18,13 +19,15 @@ const List = ({ items, mt }: IProps) => (
     </div>
 );
 
-// TODO : Remove footerList2 and merge footerList1 and footerList3
 const Footer: NextPage = () => (
     <div className='mt-6 hidden xl:block'>
         <List items={footerList1} mt={false} />
         <List items={footerList2} mt />
-        <List items={footerList3} mt />
-        <p className='text-gray-400 text-sm mt-5'>© 2022 TikTik</p>
+        <Link href='https://github.com/jonoman55'>
+            <a className='flex mt-5 text-gray-400 text-sm hover:underline cursor-pointer' target='_blank' rel='noreferrer'>
+                © {new Date().getFullYear()} TikTik - JC Dev
+            </a>
+        </Link>
     </div>
 );
 

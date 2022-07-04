@@ -52,13 +52,13 @@ const Detail = ({ postDetails }: IProps) => {
     const handleLike = async (like: boolean) => {
         if (userProfile) {
             const { data } = await axios.put(`${BASE_URL}/api/like`, {
-                userId: userProfile._id,
-                postId: post._id,
+                userId: userProfile?._id,
+                postId: post?._id,
                 like
             });
             setPost({
                 ...post,
-                likes: data.likes
+                likes: data?.likes
             });
         }
     };
@@ -74,7 +74,7 @@ const Detail = ({ postDetails }: IProps) => {
                 });
                 setPost({
                     ...post,
-                    comments: data.comments
+                    comments: data?.comments
                 });
                 setComment('');
                 setIsPostingComment(false);
@@ -126,35 +126,35 @@ const Detail = ({ postDetails }: IProps) => {
                     </div>
                     <div className='relative w-[1000px] md:w-[900px] lg:w-[700px]'>
                         <div className='lg:mt-20 mt-10'>
-                            <Link href={`/profile/${post.postedBy._id}`}>
+                            <Link href={`/profile/${post?.postedBy?._id}`}>
                                 <div className='flex gap-4 mb-4 bg-white w-full pl-10 cursor-pointer'>
                                     <Image
                                         width={60}
                                         height={60}
                                         alt='user-profile'
                                         className='rounded-full'
-                                        src={post.postedBy.image}
+                                        src={post?.postedBy?.image}
                                     />
                                     <div>
                                         <div className='text-xl font-bold lowercase tracking-wider flex gap-2 items-center justify-center'>
-                                            {post.postedBy.userName.replace(/\s+/g, '')}{' '}
+                                            {post?.postedBy?.userName?.replace(/\s+/g, '')}{' '}
                                             <GoVerified className='text-blue-400 text-xl' />
                                         </div>
                                         <p className='text-md'>
-                                            {post.postedBy.userName}
+                                            {post?.postedBy?.userName}
                                         </p>
                                     </div>
                                 </div>
                             </Link>
                             <div className='px-10'>
                                 <p className='text-md text-gray-600'>
-                                    {post.caption}
+                                    {post?.caption}
                                 </p>
                             </div>
                             <div className='mt-10 px-10'>
                                 {userProfile && (
                                     <LikeButton
-                                        likes={post.likes}
+                                        likes={post?.likes}
                                         flex='flex'
                                         handleLike={() => handleLike(true)}
                                         handleDislike={() => handleLike(false)}
@@ -165,7 +165,7 @@ const Detail = ({ postDetails }: IProps) => {
                                 comment={comment}
                                 setComment={setComment}
                                 addComment={addComment}
-                                comments={post.comments}
+                                comments={post?.comments}
                                 isPostingComment={isPostingComment}
                             />
                         </div>

@@ -6,7 +6,7 @@ export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 /**
  * Create or Get User from Sanity
- * @param response HTTP Response
+ * @param response Credential Response
  * @param addUser Add User to Sanity Function
  */
 export const createOrGetUser = async (response: any, addUser: any) => {
