@@ -18,6 +18,7 @@ const List = ({ items, mt }: IProps) => (
     </div>
 );
 
+// TODO : Remove footerList2 and merge footerList1 and footerList3
 const Footer: NextPage = () => (
     <div className='mt-6 hidden xl:block'>
         <List items={footerList1} mt={false} />

@@ -33,6 +33,11 @@ const Navbar = () => {
         }
     };
 
+    const handleLogout = () => {
+        googleLogout();
+        removeUser();
+    };
+
     return (
         <div className='w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4'>
             <Link href='/'>
@@ -89,10 +94,7 @@ const Navbar = () => {
                         <button
                             type='button'
                             className='border-2 p-2 rounded-full cursor-pointer outline-none shadow-md'
-                            onClick={() => {
-                                googleLogout();
-                                removeUser();
-                            }}
+                            onClick={handleLogout}
                         >
                             <AiOutlineLogout color='red' fontSize={21} />
                         </button>

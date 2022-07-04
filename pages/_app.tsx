@@ -6,7 +6,8 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import '../styles/globals.css';
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+// TODO : Add toast notifications to project
+const TikTikApp = ({ Component, pageProps }: AppProps) => {
     const [isSSR, setIsSSR] = useState(true);
 
     useEffect(() => {
@@ -31,4 +32,4 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     );
 };
 
-export default MyApp;
+export default TikTikApp;

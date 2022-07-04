@@ -23,7 +23,7 @@ const Profile = ({ data }: IProps) => {
     const [showUserVideos, setShowUserVideos] = useState<Boolean>(true);
     const [videosList, setVideosList] = useState<Video[]>([]);
 
-    const { userProfile } = useAuthStore();
+    const { userProfile }: any = useAuthStore();
 
     const { user, userVideos, userLikedVideos } = data;
 
