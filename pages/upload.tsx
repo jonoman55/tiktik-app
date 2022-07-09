@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SanityAssetDocument } from '@sanity/client';
 import { useRouter } from 'next/router';
 import { FaCloudUploadAlt } from 'react-icons/fa';
@@ -164,7 +164,9 @@ const Upload = () => {
                                                 loop
                                             />
                                             <div className='flex justify-between gap-20'>
-                                                <p className='text-lg'>{videoAsset.originalFilename}</p>
+                                                <p className='text-lg'>
+                                                    {videoAsset.originalFilename}
+                                                </p>
                                                 <button
                                                     className='rounded-full bg-gray-200 text-red-400 p-2 text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out'
                                                     type='button'
