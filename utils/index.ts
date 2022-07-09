@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 import { IGoogleUser, ISanityUser } from '../types';
 
@@ -11,15 +12,10 @@ export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
  */
 export const createOrGetUser = async (response: any, addUser: any) => {
     // decode google user
-    const base64Url = response.credential.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const decoded = Buffer.from(base64, 'base64').toString();
-    const jsonPayload = decodeURIComponent(decoded.split('').map((c) => {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+    const decoded: IGoogleUser = jwtDecode(response.credential);
     // destructure google user props
-    const { name, picture, sub }: IGoogleUser = JSON.parse(jsonPayload);
-    // create sanity user object
+    const { name, picture, sub } = decoded;
+    // create sanity user to store
     const user: ISanityUser = {
         _id: sub,
         _type: 'user',
@@ -37,5 +33,6 @@ export const createOrGetUser = async (response: any, addUser: any) => {
  * @param input Input String
  * @returns Capitalized String
  */
-export const capitalizeFirstLetter = (input: string) =>
-    input.charAt(0).toUpperCase() + input.slice(1);
+export const capitalizeFirstLetter = (input: string) => {
+    return input.charAt(0).toUpperCase() + input.slice(1);
+};
