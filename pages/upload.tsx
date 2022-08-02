@@ -194,7 +194,7 @@ const Upload = () => {
                             value={caption}
                             onChange={(e) => setCaption(e.target.value)}
                         />
-                        <label className='text-md font-medium '>Choose a topic</label>
+                        <label className='text-md font-medium'>Choose a topic</label>
                         <select
                             className='outline-none lg:w-650 border-2 border-gray-200 text-md capitalize lg:p-4 p-2 rounded cursor-pointer'
                             onChange={(e) => setTopic(e.target.value)}
